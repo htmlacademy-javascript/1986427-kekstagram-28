@@ -53,15 +53,15 @@ console.log(isPalindrome('топот')); // true
 // Несмотря на разный регистр, тоже палиндром
 console.log(isPalindrome('ДовОд')); // true
 // Это не палиндром
-console.log(isPalindrome('Кекс'));  // false
+console.log(isPalindrome('Кекс')); // false
 // Это палиндром
 console.log(isPalindrome('Лёша на полке клопа нашёл ')); // true
 
-console.log(getDigits('2023 год'));            // 2023
-console.log(getDigits('ECMAScript 2022'));     // 2022
+console.log(getDigits('2023 год')); // 2023
+console.log(getDigits('ECMAScript 2022')); // 2022
 console.log(getDigits('1 кефир, 0.5 батона')); // 105
-console.log(getDigits('агент 007'));           // 7
-console.log(getDigits('а я томат'));           // NaN
+console.log(getDigits('агент 007')); // 7
+console.log(getDigits('а я томат')); // NaN
 
 // Добавочный символ использован один раз
 console.log(leftFill('1', 2, '0')); // '01'
