@@ -23,5 +23,11 @@ const getDigits = (value) => {
   const digits = String(value).replace(/[^0-9]/g, '');
   return digits ? Number(digits) : NaN;
 };
-
+/**
+ *
+ * @param {string} value
+ * @param {number} len
+ * @param {string} pad
+ * @returns {string}
+ */
 const leftFill = (value, len, pad) => `${pad.repeat(len)}${value}`.slice(-len);
