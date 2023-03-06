@@ -15,8 +15,8 @@ const NAMES = [
   'Иван',
 ];
 
-const POST_COUNT_MIN_LIKES = 1;
-const POST_COUNT_MAX_LIKES = 6;
+const POST_COUNT_MIN_LIKES = 15;
+const POST_COUNT_MAX_LIKES = 200;
 const USER_PIC_MIN_COUNT = 1;
 const USER_PIC_MAX_COUNT = 5;
 const COMMENT_MIN_COUNT = 1;
@@ -62,5 +62,10 @@ const createUserPicture = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
   description: getArrayRandomElement(USER_REVIEWS),
-  likes:getRandomInteger(POST_COUNT_MIN_LIKES, POST_COUNT_MAX_LIKES)
+  likes: getRandomInteger(POST_COUNT_MIN_LIKES, POST_COUNT_MAX_LIKES),
+  comments: Array.from({length: getRandomInteger(START_RANDOM_GENERATE, COMMENT_MIN_COUNT)}, createUserComment)
 });
+
+const createUserReview = () => Array.from({length: USER_PIC_MAX_COUNT}, (_, pictureIndex) => createUserPicture(pictureIndex + 1));
+
+console.log(createUserReview());
