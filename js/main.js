@@ -68,4 +68,4 @@ const createUserPicture = (index) => ({
 
 const createUserReview = () => Array.from({length: USER_PIC_MAX_COUNT}, (_, pictureIndex) => createUserPicture(pictureIndex + 1));
 
-console.log(createUserReview());
+createUserReview();
