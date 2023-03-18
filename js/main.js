@@ -1,3 +1,4 @@
-import {createUserReview} from './data.js';
+import { createUserReview } from './data.js';
+import { renderThumbnails } from './thumbnail.js';
 
-createUserReview();
+renderThumbnails(createUserReview());
