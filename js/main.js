@@ -1,4 +1,4 @@
 import { createUserReview } from './data.js';
-import { renderThumbnails } from './thumbnail.js';
+import { renderGallery } from './gallery.js';
 
-renderThumbnails(createUserReview());
+renderGallery(createUserReview());
