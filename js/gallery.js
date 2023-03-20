@@ -10,7 +10,7 @@ export const renderGallery = (pictures) => {
       return;
     }
 
-    const picture = pictures.find((item) => item.id === +thumbnail.dataset.thumbnailId);
+    const picture = pictures.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
     showBigPicture(picture);
   });
 
