@@ -20,22 +20,19 @@ const NAMES = [
 const POST_COUNT_MIN_LIKES = 15;
 const POST_COUNT_MAX_LIKES = 200;
 const USER_PIC_MIN_COUNT = 1;
-const USER_PIC_MAX_COUNT = 5;
+const USER_PIC_MAX_COUNT = 6;
 const COMMENT_MIN_COUNT = 1;
 const COMMENT_MAX_COUNT = 5;
-const START_RANDOM_GENERATE = 0;
-
+const START_RANDOM_GENERATE = 1;
 
 const generateCommentId = createIdGenerator();
 
 const createUserMessage = () => Array.from({
   length: getRandomInteger(COMMENT_MIN_COUNT, COMMENT_MAX_COUNT)
 },
-() => {
-  getArrayRandomElement(USER_REVIEWS);
-}).join(' ');
+() => getArrayRandomElement(USER_REVIEWS)).join(' ');
 
-const createUserComment = () => ({
+export const createUserComment = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(USER_PIC_MIN_COUNT, USER_PIC_MAX_COUNT)}.svg`,
   message: createUserMessage(),
@@ -47,7 +44,7 @@ const createUserPicture = (index) => ({
   url: `photos/${index}.jpg`,
   description: getArrayRandomElement(USER_REVIEWS),
   likes: getRandomInteger(POST_COUNT_MIN_LIKES, POST_COUNT_MAX_LIKES),
-  comments: Array.from({length: getRandomInteger(START_RANDOM_GENERATE, COMMENT_MIN_COUNT)}, createUserComment)
+  comments: Array.from({length: getRandomInteger(START_RANDOM_GENERATE, COMMENT_MAX_COUNT)}, createUserComment)
 });
 
 export const createUserReview = () => Array.from({length: USER_PIC_MAX_COUNT}, (_, pictureIndex) => createUserPicture(pictureIndex + 1));
