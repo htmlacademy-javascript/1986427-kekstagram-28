@@ -21,14 +21,15 @@ const POST_COUNT_MIN_LIKES = 15;
 const POST_COUNT_MAX_LIKES = 200;
 const USER_PIC_MIN_COUNT = 1;
 const USER_PIC_MAX_COUNT = 6;
-const COMMENT_MIN_COUNT = 1;
-const COMMENT_MAX_COUNT = 5;
+const COMMENT_MIN_VOLUME = 1;
+const COMMENT_MAX_VOLUME = 2;
+const COMMENT_MAX_COUNT = 15;
 const START_RANDOM_GENERATE = 1;
 
 const generateCommentId = createIdGenerator();
 
 const createUserMessage = () => Array.from({
-  length: getRandomInteger(COMMENT_MIN_COUNT, COMMENT_MAX_COUNT)
+  length: getRandomInteger(COMMENT_MIN_VOLUME, COMMENT_MAX_VOLUME)
 },
 () => getArrayRandomElement(USER_REVIEWS)).join(' ');
 
