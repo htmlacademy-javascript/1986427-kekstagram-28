@@ -24,12 +24,6 @@ const onImageLoadEscKeyDown = (evt) => {
   }
 };
 
-const onInputKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-  }
-};
-
 function closeLoaderModal () {
   uploadImageForm.reset();
 
@@ -66,10 +60,16 @@ const onImageSelect = () => {
   document.addEventListener('keydown', onImageLoadEscKeyDown);
 };
 
+const onInputKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+  pristine.addValidator(hashtags, validateHashtags, 'Неверный формат хэштэгов');
+};
+
 export const formListener = () => {
   uploadFile.addEventListener('change', onImageSelect);
   uploadImageForm.addEventListener('submit', onImageSubmit);
   hashtags.addEventListener('keydown', onInputKeyDown);
   description.addEventListener('keydown', onInputKeyDown);
-  pristine.addValidator(hashtags, validateHashtags, 'Неверный формат хэштэгов');
 };
