@@ -1,16 +1,16 @@
 import {isArrayUnique, isEscapeKey} from './utils.js';
+import {Effect, setEffect, onEffectPickerChange, onEffectSliderUpdate, effectPicker, effectSlider} from './effects.js';
+import {Scale, onScaleControlClick, setScale, scaleControl, } from './scaler.js';
 
-const uploadFile = document.querySelector('#upload-file');
+const form = document.querySelector('.img-upload__form');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadImageForm = document.querySelector('#upload-select-image');
 const hashtags = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
 
-const pristine = new Pristine(uploadFile, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'span',
-  errorTextClass: 'img-upload__field-wrapper__error',
+  errorTextParent: 'img-upload__field-wrapper'
 });
 
 const onImageLoadCloseClick = () => {
@@ -51,6 +51,15 @@ const validateHashtags = (value) => {
   return tags.length <= 5 && isArrayUnique(tags) && tags.every(validateHashtag);
 };
 
+export const processingPhoto = () => {
+  setScale(Scale.MAX);
+  setEffect(Effect.NONE);
+
+  scaleControl.addEventListener('click', onScaleControlClick);
+  effectPicker.addEventListener('change', onEffectPickerChange);
+  effectSlider.on('update', onEffectSliderUpdate);
+};
+
 const onImageSelect = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -68,8 +77,9 @@ const onInputKeyDown = (evt) => {
 };
 
 export const formListener = () => {
-  uploadFile.addEventListener('change', onImageSelect);
+  form.addEventListener('change', onImageSelect);
   uploadImageForm.addEventListener('submit', onImageSubmit);
   hashtags.addEventListener('keydown', onInputKeyDown);
   description.addEventListener('keydown', onInputKeyDown);
+  processingPhoto();
 };
