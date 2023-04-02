@@ -1,7 +1,7 @@
 import {isArrayUnique, isEscapeKey} from './utils.js';
 import {Effect, setEffect, onEffectSliderUpdate, effectPicker, effectSlider} from './effects.js';
 import {Scale, onScaleControlClick, setScale, scaleControl, } from './scaler.js';
-import {BASE_URL_UPLOAD, REQUEST_METHOD_POST, sendRequest} from './RequestApi.js';
+import {UPLOAD_PHOTO, REQUEST_METHOD_POST, sendRequest} from './RequestApi.js';
 import {MESSAGE_TYPE_ERROR, MESSAGE_TYPE_SUCCESS, showMessage} from './MessageInfo.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -41,7 +41,7 @@ const sendForm = async () => {
     .setAttribute('disabled', '');
 
   try {
-    await sendRequest(BASE_URL_UPLOAD, {
+    await sendRequest(UPLOAD_PHOTO, {
       method: REQUEST_METHOD_POST,
       body: formData
     });
@@ -88,8 +88,7 @@ const onImageSelect = (event) => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  const uploadCancelButton = document.querySelector('#upload-cancel');
-  uploadCancelButton.addEventListener('click', onImageLoadCloseClick);
+  document.querySelector('#upload-cancel').addEventListener('click', onImageLoadCloseClick);
   document.addEventListener('keydown', onImageLoadEscKeyDown);
   if (event.target === form.filename) {
     processingPhoto();

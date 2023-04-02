@@ -1,5 +1,6 @@
 const uploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
+const slider = document.querySelector('.effect-level__slider');
 export const effectPicker = document.querySelector('.img-upload__effects');
 
 export const Effect = {
@@ -46,7 +47,7 @@ const createSliderOptions = (name) => {
 };
 
 export const effectSlider = noUiSlider.create(
-  document.querySelector('.effect-level__slider'),
+  slider,
   createSliderOptions(Effect.NONE)
 );
 
