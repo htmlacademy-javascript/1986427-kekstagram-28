@@ -1,3 +1,7 @@
+const uploadPreview = document.querySelector('.img-upload__preview img');
+const effectLevel = document.querySelector('.effect-level__value');
+export const effectPicker = document.querySelector('.img-upload__effects');
+
 export const Effect = {
   NONE: 'none',
   CHROME: 'chrome',
@@ -9,14 +13,14 @@ export const Effect = {
 
 const effectRange = {
   [Effect.NONE]: [0, 100, 1],
-  [Effect.CHROME]: [0, 1, .1],
-  [Effect.SEPIA]: [0, 1, .1],
+  [Effect.CHROME]: [0, 1, 0.1],
+  [Effect.SEPIA]: [0, 1, 0.1],
   [Effect.MARVIN]: [0, 100, 1],
-  [Effect.PHOBOS]: [0, 3, .1],
-  [Effect.HEAT]: [1, 3, .1]
+  [Effect.PHOBOS]: [0, 3, 0.1],
+  [Effect.HEAT]: [1, 3, 0.1]
 };
 
-const effectFormatter = {
+const effectsMotion = {
   [Effect.CHROME]: (value) => `grayscale(${value})`,
   [Effect.HEAT]: (value) => `brightness(${value})`,
   [Effect.SEPIA]: (value) => `sepia(${value})`,
@@ -27,24 +31,19 @@ const effectFormatter = {
 
 const createSliderOptions = (name) => {
   const [min, max, step] = effectRange[name];
-  const format = {
-    to: effectFormatter[name],
-    from: Number
-  };
 
   return {
     range: {min, max},
     step,
     start: max,
-    format,
     behaviour: 'snap',
-    connect: 'lower'
+    connect: 'lower',
+    format: {
+      to: effectsMotion[name],
+      from: Number
+    },
   };
 };
-
-const uploadPreview = document.querySelector('.img-upload__preview img');
-export const effectPicker = document.querySelector('.img-upload__effects');
-const effectLevel = document.querySelector('.effect-level__value');
 
 export const effectSlider = noUiSlider.create(
   document.querySelector('.effect-level__slider'),
@@ -52,15 +51,11 @@ export const effectSlider = noUiSlider.create(
 );
 
 export const setEffect = (name) => {
+  if (name !== Effect.NONE) {
+    effectLevel.parentElement.classList.toggle('hidden');
+  }
   uploadPreview.setAttribute('class', `effects__preview--${name}`);
   effectSlider.updateOptions(createSliderOptions(name));
-  effectLevel.parentElement.classList.toggle('hidden', name === Effect.NONE);
-};
-
-export const onEffectPickerChange = (event) => {
-  const name = event.target.getAttribute('value');
-
-  setEffect(name);
 };
 
 export const onEffectSliderUpdate = () => {

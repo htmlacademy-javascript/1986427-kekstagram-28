@@ -1,6 +1,8 @@
 import {isArrayUnique, isEscapeKey} from './utils.js';
-import {Effect, setEffect, onEffectPickerChange, onEffectSliderUpdate, effectPicker, effectSlider} from './effects.js';
+import {Effect, setEffect, onEffectSliderUpdate, effectPicker, effectSlider} from './effects.js';
 import {Scale, onScaleControlClick, setScale, scaleControl, } from './scaler.js';
+import {BASE_URL_UPLOAD, REQUEST_METHOD_POST, sendRequest} from './RequestApi.js';
+import {MESSAGE_TYPE_ERROR, MESSAGE_TYPE_SUCCESS, showMessage} from './MessageInfo.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -32,11 +34,31 @@ function closeLoaderModal () {
 
   document.removeEventListener('keydown', onImageLoadEscKeyDown);
 }
+const sendForm = async () => {
+  const formData = new FormData(form);
 
-const onImageSubmit = (evt) => {
+  form.querySelector('#upload-submit')
+    .setAttribute('disabled', '');
+
+  try {
+    await sendRequest(BASE_URL_UPLOAD, {
+      method: REQUEST_METHOD_POST,
+      body: formData
+    });
+
+    form.querySelector('#picture-cancel').click();
+    showMessage(MESSAGE_TYPE_SUCCESS);
+  } catch {
+    showMessage(MESSAGE_TYPE_ERROR);
+  }
+
+  form.querySelector('#upload-submit').removeAttribute('disabled');
+};
+
+const onImageSubmit = async (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    uploadImageForm.submit();
+    await sendForm();
     closeLoaderModal();
   }
 };
@@ -56,17 +78,22 @@ export const processingPhoto = () => {
   setEffect(Effect.NONE);
 
   scaleControl.addEventListener('click', onScaleControlClick);
-  effectPicker.addEventListener('change', onEffectPickerChange);
+  effectPicker.addEventListener('change', (event) => {
+    setEffect(event.target.getAttribute('value'));
+  });
   effectSlider.on('update', onEffectSliderUpdate);
 };
 
-const onImageSelect = () => {
+const onImageSelect = (event) => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   const uploadCancelButton = document.querySelector('#upload-cancel');
   uploadCancelButton.addEventListener('click', onImageLoadCloseClick);
   document.addEventListener('keydown', onImageLoadEscKeyDown);
+  if (event.target === form.filename) {
+    processingPhoto();
+  }
 };
 
 const onInputKeyDown = (evt) => {
@@ -81,5 +108,4 @@ export const formListener = () => {
   uploadImageForm.addEventListener('submit', onImageSubmit);
   hashtags.addEventListener('keydown', onInputKeyDown);
   description.addEventListener('keydown', onInputKeyDown);
-  processingPhoto();
 };
