@@ -1,11 +1,12 @@
+const picture = document.querySelector('.img-upload__preview img');
+export const scaleControl = document.querySelector('.img-upload__scale');
+
 export const Scale = {
   MIN: 25,
   MAX: 100,
   STEP: 25
 };
 
-const picture = document.querySelector('.img-upload__preview img');
-export const scaleControl = document.querySelector('.img-upload__scale');
 export const setScale = (percent) => {
   picture.style.setProperty('transform', `scale(${percent / 100})`);
   scaleControl.querySelector('input').setAttribute('value', `${percent}%`);
