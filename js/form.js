@@ -79,7 +79,10 @@ export const processingPhoto = () => {
 
   scaleControl.addEventListener('click', onScaleControlClick);
   effectPicker.addEventListener('change', (event) => {
-    setEffect(event.target.getAttribute('value'));
+    const effectName = event.target.getAttribute('value');
+    const show = effectName === Effect.NONE;
+
+    setEffect(effectName, show);
   });
   effectSlider.on('update', onEffectSliderUpdate);
 };

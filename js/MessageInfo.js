@@ -1,8 +1,10 @@
+import {isEscapeKey} from './utils.js';
+
 export const MESSAGE_TYPE_ERROR = 'error';
 export const MESSAGE_TYPE_SUCCESS = 'success';
 
 const onDocumentKeydown = (event) => {
-  if (event.key.startsWith('Esc')) {
+  if (isEscapeKey(event)) {
     const popup = document.querySelector('.success, .error');
 
     popup.click();
