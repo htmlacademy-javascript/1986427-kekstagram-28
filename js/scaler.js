@@ -14,10 +14,12 @@ export const setScale = (percent) => {
 
 export const onScaleControlClick = (event) => {
   const inputValue = Number.parseFloat(scaleControl.querySelector('.scale__control--value').value);
+
   if (event.target.classList.contains('scale__control--bigger')) {
     setScale(Math.min(inputValue + Scale.STEP, Scale.MAX));
     return;
   }
+
   if (event.target.classList.contains('scale__control--smaller')) {
     setScale(Math.max(inputValue - Scale.STEP, Scale.MIN));
   }

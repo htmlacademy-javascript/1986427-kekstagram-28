@@ -34,6 +34,7 @@ function closeLoaderModal () {
 
   document.removeEventListener('keydown', onImageLoadEscKeyDown);
 }
+
 const sendForm = async () => {
   const formData = new FormData(form);
 
@@ -76,14 +77,15 @@ const validateHashtags = (value) => {
  * @param {string} url
  */
 const setPicture = (url) => {
-  const picture = document.querySelector('.img-upload__preview img');
+  document.querySelector('.img-upload__preview img')
+    .setAttribute('src', url);
 
-  picture.setAttribute('src', url);
-
-  effectPicker.querySelectorAll('span').forEach((span) => {
-    span.style.setProperty('background-image', `url(${url})`);
-  });
+  effectPicker.querySelectorAll('span')
+    .forEach((span) => {
+      span.style.setProperty('background-image', `url(${url})`);
+    });
 };
+
 export const processingPhoto = (file) => {
   setPicture(URL.createObjectURL(file));
   setScale(Scale.MAX);

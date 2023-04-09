@@ -60,4 +60,3 @@ export const onEffectSliderUpdate = () => {
   uploadPreview.style.setProperty('filter', effectSlider.get());
   effectLevel.setAttribute('value', effectSlider.get(true));
 };
-
