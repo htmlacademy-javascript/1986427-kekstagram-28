@@ -20,7 +20,6 @@ const onPopupClick = (event) => {
   }
 };
 
-
 export const showMessage = (type, params) => {
   const popupTemplate = document.querySelector(`#${type}`);
   const popup = popupTemplate.content.querySelector(`.${type}`).cloneNode(true);
