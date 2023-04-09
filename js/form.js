@@ -72,8 +72,20 @@ const validateHashtags = (value) => {
     .filter((tag) => tag.trim().length);
   return tags.length <= 5 && isArrayUnique(tags) && tags.every(validateHashtag);
 };
+/**
+ * @param {string} url
+ */
+const setPicture = (url) => {
+  const picture = document.querySelector('.img-upload__preview img');
 
-export const processingPhoto = () => {
+  picture.setAttribute('src', url);
+
+  effectPicker.querySelectorAll('span').forEach((span) => {
+    span.style.setProperty('background-image', `url(${url})`);
+  });
+};
+export const processingPhoto = (file) => {
+  setPicture(URL.createObjectURL(file));
   setScale(Scale.MAX);
   setEffect(Effect.NONE);
 
@@ -94,7 +106,7 @@ const onImageSelect = (event) => {
   document.querySelector('#upload-cancel').addEventListener('click', onImageLoadCloseClick);
   document.addEventListener('keydown', onImageLoadEscKeyDown);
   if (event.target === form.filename) {
-    processingPhoto();
+    processingPhoto(event.target.files.item(0));
   }
 };
 
