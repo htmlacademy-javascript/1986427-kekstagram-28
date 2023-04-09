@@ -37,8 +37,7 @@ const createSliderOptions = (name) => {
     range: {min, max},
     step,
     start: max,
-    behaviour: 'snap',
-    connect: 'lower',
+    connect: 'upper',
     format: {
       to: effectsMotion[name],
       from: Number
@@ -51,10 +50,8 @@ export const effectSlider = noUiSlider.create(
   createSliderOptions(Effect.NONE)
 );
 
-export const setEffect = (name) => {
-  if (name !== Effect.NONE) {
-    effectLevel.parentElement.classList.toggle('hidden');
-  }
+export const setEffect = (name, showLevel) => {
+  effectLevel.parentElement.classList.toggle('hidden', showLevel);
   uploadPreview.setAttribute('class', `effects__preview--${name}`);
   effectSlider.updateOptions(createSliderOptions(name));
 };
@@ -63,4 +60,3 @@ export const onEffectSliderUpdate = () => {
   uploadPreview.style.setProperty('filter', effectSlider.get());
   effectLevel.setAttribute('value', effectSlider.get(true));
 };
-

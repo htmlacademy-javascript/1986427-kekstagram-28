@@ -34,6 +34,7 @@ function closeLoaderModal () {
 
   document.removeEventListener('keydown', onImageLoadEscKeyDown);
 }
+
 const sendForm = async () => {
   const formData = new FormData(form);
 
@@ -72,14 +73,30 @@ const validateHashtags = (value) => {
     .filter((tag) => tag.trim().length);
   return tags.length <= 5 && isArrayUnique(tags) && tags.every(validateHashtag);
 };
+/**
+ * @param {string} url
+ */
+const setPicture = (url) => {
+  document.querySelector('.img-upload__preview img')
+    .setAttribute('src', url);
 
-export const processingPhoto = () => {
+  effectPicker.querySelectorAll('span')
+    .forEach((span) => {
+      span.style.setProperty('background-image', `url(${url})`);
+    });
+};
+
+export const processingPhoto = (file) => {
+  setPicture(URL.createObjectURL(file));
   setScale(Scale.MAX);
   setEffect(Effect.NONE);
 
   scaleControl.addEventListener('click', onScaleControlClick);
   effectPicker.addEventListener('change', (event) => {
-    setEffect(event.target.getAttribute('value'));
+    const effectName = event.target.getAttribute('value');
+    const show = effectName === Effect.NONE;
+
+    setEffect(effectName, show);
   });
   effectSlider.on('update', onEffectSliderUpdate);
 };
@@ -91,7 +108,7 @@ const onImageSelect = (event) => {
   document.querySelector('#upload-cancel').addEventListener('click', onImageLoadCloseClick);
   document.addEventListener('keydown', onImageLoadEscKeyDown);
   if (event.target === form.filename) {
-    processingPhoto();
+    processingPhoto(event.target.files.item(0));
   }
 };
 
