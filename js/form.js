@@ -47,7 +47,7 @@ const sendForm = async () => {
       body: formData
     });
 
-    form.querySelector('#picture-cancel').click();
+    form.querySelector('#upload-cancel').click();
     showMessage(MESSAGE_TYPE_SUCCESS);
   } catch {
     showMessage(MESSAGE_TYPE_ERROR);
@@ -89,13 +89,12 @@ const setPicture = (url) => {
 export const processingPhoto = (file) => {
   setPicture(URL.createObjectURL(file));
   setScale(Scale.MAX);
-  setEffect(Effect.NONE);
+  setEffect(Effect.NONE, true);
 
   scaleControl.addEventListener('click', onScaleControlClick);
   effectPicker.addEventListener('change', (event) => {
     const effectName = event.target.getAttribute('value');
     const show = effectName === Effect.NONE;
-
     setEffect(effectName, show);
   });
   effectSlider.on('update', onEffectSliderUpdate);
