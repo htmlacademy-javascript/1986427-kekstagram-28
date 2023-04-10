@@ -5,9 +5,7 @@ export const MESSAGE_TYPE_SUCCESS = 'success';
 
 const onDocumentKeydown = (event) => {
   if (isEscapeKey(event)) {
-    const popup = document.querySelector('.success, .error');
-
-    popup.click();
+    document.querySelector('.success, .error').click();
     event.stopPropagation();
   }
 };
